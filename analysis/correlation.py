@@ -103,7 +103,6 @@ def study(measure):
     ax.set_ylabel('CAR')
     l2 = sns.lineplot(x=ei_overlapping_dates, y=car, ax=ax, color=sns_palette[1], label='CAR')
 
-
     months = mdates.MonthLocator()  # every month
     days = mdates.DayLocator()  # every month
     months_fmt = mdates.DateFormatter('%b')
@@ -115,8 +114,9 @@ def study(measure):
     ax.legend().remove()
 
     plt.figlegend(loc='upper left')
-    car_data = {date:c for date, c in zip(ei_overlapping_dates, car)}
 
+    # Cross Correlation Plot
+    car_data = {date:c for date, c in zip(ei_overlapping_dates, car)}
     x, y, d = [], [], []
     for period, measure_rate in zip(periods, measure_rates):
         start, end = period
@@ -127,7 +127,6 @@ def study(measure):
                 y.append(measure_rate)
                 d.append(date)
 
-    # Cross Correlation Plot
     fig, ax = plt.subplots()
     ax.grid()
     xcorr_result = ax.xcorr(x, y, usevlines=True, maxlags=80, normed=True, detrend=signal.detrend)
